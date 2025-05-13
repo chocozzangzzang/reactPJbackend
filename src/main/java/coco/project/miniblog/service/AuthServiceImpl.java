@@ -1,5 +1,6 @@
 package coco.project.miniblog.service;
 
+import coco.project.miniblog.dto.LoginDTO;
 import coco.project.miniblog.dto.UserDTO;
 import coco.project.miniblog.entity.User;
 import coco.project.miniblog.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -30,7 +32,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public String login(UserDTO userDTO) {
+    public LoginDTO login(UserDTO userDTO) {
 
         try {
             Authentication authentication = authenticationManager.authenticate(
@@ -40,8 +42,9 @@ public class AuthServiceImpl implements AuthService{
                     )
             );
             String jwttoken = jwtUtil.generateToken(userDTO.getUsername());
-            log.info(jwttoken);
-            return jwttoken;
+            String userRole = authentication.getAuthorities().toString();
+            log.info("service : {} == {}", jwttoken, userRole);
+            return new LoginDTO(userDTO.getUsername(), jwttoken, userRole);
         } catch (AuthenticationException e) {
             throw new RuntimeException("로그인 실패 ", e);
         }

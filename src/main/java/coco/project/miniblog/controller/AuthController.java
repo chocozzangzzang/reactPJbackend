@@ -1,5 +1,6 @@
 package coco.project.miniblog.controller;
 
+import coco.project.miniblog.dto.LoginDTO;
 import coco.project.miniblog.dto.UserDTO;
 import coco.project.miniblog.service.AuthServiceImpl;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,10 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("login")
-    public String login(@RequestBody UserDTO userDTO) {
-        return authService.login(userDTO);
+    public LoginDTO login(@RequestBody UserDTO userDTO) {
+        LoginDTO loginDTO = authService.login(userDTO);
+        log.info("login : {}", loginDTO.toString());
+        return loginDTO;
     }
 
     @PostMapping("signup")

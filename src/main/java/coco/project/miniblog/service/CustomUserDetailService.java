@@ -23,9 +23,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("userdetails " + username);
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        log.info("userdetails : {}",  user.toString());
 
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
@@ -33,7 +34,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .roles(user.getRole())
                 .build();
 
-        log.info("userdetails : " + userDetails.toString());
+        log.info("userdetails after : {} ", userDetails.toString());
 
         return userDetails;
     }
