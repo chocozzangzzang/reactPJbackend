@@ -2,10 +2,13 @@ package coco.project.miniblog.controller;
 
 import coco.project.miniblog.dto.LoginDTO;
 import coco.project.miniblog.dto.UserDTO;
+import coco.project.miniblog.dto.UserManageDTO;
 import coco.project.miniblog.service.AuthServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -27,5 +30,8 @@ public class AuthController {
     public String signup(@RequestBody UserDTO userDTO) {
         return authService.signup(userDTO);
     }
+
+    @GetMapping("userlist")
+    public List<UserManageDTO> userList() {return authService.userlist();}
 
 }

@@ -2,6 +2,7 @@ package coco.project.miniblog.service;
 
 import coco.project.miniblog.dto.LoginDTO;
 import coco.project.miniblog.dto.UserDTO;
+import coco.project.miniblog.dto.UserManageDTO;
 import coco.project.miniblog.entity.User;
 import coco.project.miniblog.repository.UserRepository;
 import coco.project.miniblog.security.JwtUtil;
@@ -60,5 +61,18 @@ public class AuthServiceImpl implements AuthService{
                         "USER")
         );
         return "가입되었습니다.";
+    }
+
+    public List<UserManageDTO> userlist() {
+        List<User> users = userRepository.getUserList();
+        System.out.println(users);
+        List<UserManageDTO> userDTOs = new ArrayList<>();
+        for(User u : users) {
+            System.out.println(u);
+            UserManageDTO umdto = new UserManageDTO(u.getUserId(), u.getUsername(), u.getRole());
+            userDTOs.add(umdto);
+        }
+        System.out.println(userDTOs);
+        return userDTOs;
     }
 }
