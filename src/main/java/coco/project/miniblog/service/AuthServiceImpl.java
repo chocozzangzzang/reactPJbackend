@@ -75,4 +75,8 @@ public class AuthServiceImpl implements AuthService{
         System.out.println(userDTOs);
         return userDTOs;
     }
+
+    public void deleteUser(Long uid) {
+        userRepository.deleteById(uid);
+    }
 }

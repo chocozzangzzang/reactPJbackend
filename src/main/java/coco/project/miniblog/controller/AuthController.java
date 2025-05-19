@@ -34,4 +34,9 @@ public class AuthController {
     @GetMapping("userlist")
     public List<UserManageDTO> userList() {return authService.userlist();}
 
+    @DeleteMapping("deleteUser/{uid}")
+    public void deleteUser(@PathVariable Long uid) {
+        authService.deleteUser(uid);
+    }
+
 }

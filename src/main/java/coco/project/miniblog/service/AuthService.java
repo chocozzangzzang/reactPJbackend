@@ -10,4 +10,5 @@ public interface AuthService {
     public LoginDTO login(UserDTO userDTO);
     public String signup(UserDTO userDTO);
     public List<UserManageDTO> userlist();
+    public void deleteUser(Long uid);
 }
